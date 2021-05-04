@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "covidvaccineindia-b7738": {
+      "hosting": {
+        "covidvaccineindia": [
+          "covidvaccineindia-b7738"
+        ]
+      }
+    }
+  }
+}

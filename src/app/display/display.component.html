@@ -1,0 +1,37 @@
+<app-navbar2 [pincode]="pincode" [date]="date"></app-navbar2>
+<div class="container-fluid p-0" style="background-color: #11213F;">
+    <div class="table-responsive">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Vaccination Center</th>
+                    <th>Address</th>
+                    <th>Cost</th>
+                    <th>Vaccine Name</th>
+                    <th>Available Vaccine Capacity</th>
+                    <th>Minimum Age to book slot</th>
+                    <th>Slots</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let center of centers; index as i">
+                    <th>{{ i + 1 }}</th>
+                    <td>{{center.name}}</td>
+                    <td>{{center.address}},
+                        {{center.district_name}},
+                        {{center.state_name}}
+                        -
+                        {{center.pincode}}</td>
+                    <td *ngIf="center.fee_type == 'Free'">{{center.fee_type}}</td>
+                    <td *ngIf="center.fee_type != 'Free'">₹{{center.fee}}</td>
+                    <td>{{center.vaccine}}</td>
+                    <td>{{center.available_capacity}}</td>
+                    <td>{{center.min_age_limit}}
+                        Years</td>
+                    <td><p *ngFor="let slot of center.slots" class="badge badge-pill badge-light" style="font-size: 12.35px;">{{slot}}</p></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
