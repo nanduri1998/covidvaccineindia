@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   searchByPIN() {
     const pincode = this.pincode.value;
     const date: string = this.date.value;
-    if (pincode === null || pincode === undefined || pincode === '' || pincode === '000000') {
+    if (pincode === null || pincode === undefined || pincode === '' || pincode === '000000' || pincode === '999999') {
       alert('Enter a valid Pincode');
       return;
     }
