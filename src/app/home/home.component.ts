@@ -20,7 +20,15 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line: typedef
   searchByPIN() {
     const pincode = this.pincode.value;
-    const date = this.date.value;
+    const date: string = this.date.value;
+    if (pincode === null || pincode === undefined || pincode === '' || pincode === '000000') {
+      alert('Enter a valid Pincode');
+      return;
+    }
+    if (date === null || date === undefined || date === '' || date.match('^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$')) {
+      alert('Enter a valid Date');
+      return;
+    }
     const finalDate = moment(date).format('DD-MM-yyyy');
     localStorage.setItem('pincode', pincode);
     localStorage.setItem('date', finalDate);
