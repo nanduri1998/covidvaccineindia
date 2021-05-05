@@ -43,6 +43,10 @@ export class HomeComponent implements OnInit {
       return;
     }
     const finalDate = moment(date).format('DD-MM-yyyy');
+    if (moment(finalDate).isBefore(moment(), 'D')) {
+      alert('Please select a date from Today');
+      return;
+    }
     localStorage.setItem('pincode', pincode);
     localStorage.setItem('date', finalDate);
     this.router.navigate(['display']);
@@ -61,6 +65,10 @@ export class HomeComponent implements OnInit {
       return;
     }
     const finalDate = moment(date).format('DD-MM-yyyy');
+    if (moment(finalDate).isBefore(moment(), 'D')) {
+      alert('Please select a date from Today');
+      return;
+    }
     localStorage.setItem('district', district);
     localStorage.setItem('date', finalDate);
     this.router.navigate(['display']);
