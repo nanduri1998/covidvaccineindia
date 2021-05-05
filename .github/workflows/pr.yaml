@@ -1,7 +1,7 @@
 name: PR Test
 on:
   pull_request:
-    types: [ labeled ]
+    types: [ assigned, labeled, opened, edited, reopened, synchronize, ready_for_review, review_requested, review_request_removed, unlocked ]
         
 jobs:
   deploy:
