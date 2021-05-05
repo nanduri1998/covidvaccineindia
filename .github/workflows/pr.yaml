@@ -5,8 +5,7 @@ on:
         
 jobs:
   deploy:
-    if: ${{ github.event.label.name == 'to test' }}
-    name: Deploy
+    name: PR Deploy
     runs-on: ubuntu-latest
     strategy:
       matrix:
