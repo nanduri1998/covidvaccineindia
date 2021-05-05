@@ -15,4 +15,10 @@ export class FindbypinService {
     .get<FindByPIN>('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=' + pincode + '&date=' + date)
     .toPromise();
   }
+  // tslint:disable-next-line: typedef
+  findByDistrict(district: string, date: string) {
+    return this.http
+    .get<FindByPIN>('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=' + district + '&date=' + date)
+    .toPromise();
+  }
 }
