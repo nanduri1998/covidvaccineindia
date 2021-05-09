@@ -15,13 +15,16 @@ export class Centers {
     // tslint:disable-next-line: variable-name
     fee_type: string;
     fee: number;
-    sessions: Sessions[]
+    sessions: Sessions[];
 }
 
 export class Sessions{
+    // tslint:disable-next-line: variable-name
     session_id: string;
     date: string;
+    // tslint:disable-next-line: variable-name
     available_capacity: number;
+    // tslint:disable-next-line: variable-name
     min_age_limit: number;
     vaccine: string;
     slots: string[];

@@ -1,5 +1,11 @@
-<app-navbar2 [pincode]="pincode" [date]="date"></app-navbar2>
+<app-navbar2></app-navbar2>
 <div class="container-fluid p-0">
+    <div style="display:flex; align-items:center; padding-left: 2%; padding-right: 2%; padding-top: 1%;">
+        <button (click)="goToPrevDate()" class="btn btn-dark" style="background-color: black;">Prev</button>
+        <h4 class="text-center m-auto text-white">Displaying Centers for {{date}}</h4>
+        <button (click)="goToNextDate()" class="btn btn-dark" style="background-color: black;">Next</button>
+    </div>
+    <br>
     <div class="table-responsive">
         <table class="table text-white">
             <thead>
@@ -7,7 +13,7 @@
                     <th>#</th>
                     <th>Vaccination Center</th>
                     <th>Address</th>
-                    <th>Cost</th>
+                    <th>Cost Type</th>
                     <th>Vaccine Name</th>
                     <th>Available Vaccine Capacity</th>
                     <th>Minimum Age to book slot</th>
@@ -23,15 +29,17 @@
                         {{center.state_name}}
                         -
                         {{center.pincode}}</td>
-                    <td *ngIf="center.fee_type == 'Free'">{{center.fee_type}}</td>
-                    <td *ngIf="center.fee_type != 'Free'">₹{{center.fee}}</td>
-                    <td>{{center.vaccine}}</td>
-                    <td>{{center.available_capacity}}</td>
-                    <td>{{center.min_age_limit}}
-                        Years</td>
-                    <td><p *ngFor="let slot of center.slots" class="badge badge-pill badge-light" style="font-size: 12.35px;">{{slot}}</p></td>
+                    <td>{{center.fee_type}}</td>
+                    <td>{{center?.session?.vaccine ? center?.session?.vaccine : "----"}}</td>
+                    <td>{{center?.session?.available_capacity ? center?.session?.available_capacity : "Booked"}}</td>
+                    <td>{{center?.session?.min_age_limit ? center?.session?.min_age_limit + " Years" : "----"}}</td>
+                    <td><p *ngFor="let slot of center?.session?.slots ? center?.session?.slots : ['No Slots Available']" class="badge badge-pill badge-light" style="font-size: 12.35px;">{{slot}}</p></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <footer class="text-center text-white" style="background-color: #11213F;">
+        All information being displayed is from CoWIN Public APIs and we hold no responsibility for any false data. Please note that slots and dates shown in CoWIN Portal are final. This is only for informational purposes. <br>
+        Project Open Sourced on <a href="https://github.com/nanduri1998/covidvaccineindia/">GitHub</a>
+    </footer>
 </div>
