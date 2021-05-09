@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { Sessions } from '../models/findByPin';
 import { FindbypinService } from '../services/findbypin.service';
 
 @Component({
@@ -19,21 +21,73 @@ export class DisplayComponent implements OnInit {
     this.pincode = localStorage.getItem('pincode');
     this.district = localStorage.getItem('district');
     this.date = localStorage.getItem('date');
+    localStorage.setItem('openedAt', localStorage.getItem('momentDate'));
+    await this.searchByPinorDistrict();
+  }
+
+  // tslint:disable-next-line: typedef
+  async searchByPinorDistrict() {
     if (this.pincode) {
       const result = await this.findByPINService.findByPin(this.pincode, this.date);
-      if (this.centers.length === 0) {
-        alert('No Centers Available for the selected date and pincode');
-        this.router.navigate(['/home']);
-      }
-      this.centers = result.sessions;
+      this.centers = result.centers.map(center => {
+        const finalSession = center.sessions.map(session => {
+          if (session.date === this.date) {
+            return {
+              session_id: session.session_id,
+              date: session.date,
+              // tslint:disable-next-line: variable-name
+              available_capacity: session.available_capacity,
+              // tslint:disable-next-line: variable-name
+              min_age_limit: session.min_age_limit,
+              vaccine: session.vaccine,
+              slots: session.slots
+            };
+          }
+        })[0];
+        return {
+          ...center,
+          session: finalSession
+        };
+      });
     } else if (this.district) {
       const result = await this.findByPINService.findByDistrict(this.district, this.date);
-      this.centers = result.sessions;
-      if (this.centers.length === 0) {
-        alert('No Centers Available for the selected date and district');
-        this.router.navigate(['/home']);
-      }
+      this.centers = result.centers.map(center => {
+        const finalSession = center.sessions.map(session => {
+          if (session.date === this.date) {
+            return {
+              session_id: session.session_id,
+              date: session.date,
+              // tslint:disable-next-line: variable-name
+              available_capacity: session.available_capacity,
+              // tslint:disable-next-line: variable-name
+              min_age_limit: session.min_age_limit,
+              vaccine: session.vaccine,
+              slots: session.slots
+            };
+          }
+        })[0];
+        return {
+          ...center,
+          session: finalSession
+        };
+      });
     }
+  }
+
+  // tslint:disable-next-line: typedef
+  async goToPrevDate() {
+    this.date = moment(localStorage.getItem('momentDate')).subtract(1, 'day').format('DD-MM-yyyy');
+    localStorage.setItem('date', this.date);
+    localStorage.setItem('momentDate', moment(localStorage.getItem('momentDate')).subtract(1, 'day').toString());
+    await this.searchByPinorDistrict();
+  }
+
+  // tslint:disable-next-line: typedef
+  async goToNextDate() {
+    this.date = moment(localStorage.getItem('momentDate')).add(1, 'day').format('DD-MM-yyyy');
+    localStorage.setItem('date', this.date);
+    localStorage.setItem('momentDate', moment(localStorage.getItem('momentDate')).add(1, 'day').toString());
+    await this.searchByPinorDistrict();
   }
 
 }

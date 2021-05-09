@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   states = [];
   districts = [];
   pincode = new FormControl('');
-  date = new FormControl('');
   state = new FormControl('');
   district = new FormControl('');
   // tslint:disable-next-line: typedef
@@ -33,44 +32,28 @@ export class HomeComponent implements OnInit {
   searchByPIN() {
     localStorage.clear();
     const pincode = this.pincode.value;
-    const date: string = this.date.value;
     if (pincode === null || pincode === undefined || pincode === '' || pincode === '000000' || pincode === '999999') {
       alert('Enter a valid Pincode');
       return;
     }
-    if (date === null || date === undefined || date === '' || date.match('^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$')) {
-      alert('Enter a valid Date');
-      return;
-    }
-    const finalDate = moment(date).format('DD-MM-yyyy');
-    if (moment(finalDate).isBefore(moment(), 'D')) {
-      alert('Please select a date from Today');
-      return;
-    }
+    const finalDate = moment().format('DD-MM-yyyy');
     localStorage.setItem('pincode', pincode);
     localStorage.setItem('date', finalDate);
+    localStorage.setItem('momentDate', moment().toString());
     this.router.navigate(['display']);
   }
   // tslint:disable-next-line: typedef
   searchByDistrict() {
     localStorage.clear();
     const district = this.district.value;
-    const date: string = this.date.value;
     if (district === null || district === undefined || district === '') {
       alert('Enter a valid Pincode');
       return;
     }
-    if (date === null || date === undefined || date === '' || date.match('^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$')) {
-      alert('Enter a valid Date');
-      return;
-    }
-    const finalDate = moment(date).format('DD-MM-yyyy');
-    if (moment(finalDate).isBefore(moment(), 'D')) {
-      alert('Please select a date from Today');
-      return;
-    }
+    const finalDate = moment().format('DD-MM-yyyy');
     localStorage.setItem('district', district);
     localStorage.setItem('date', finalDate);
+    localStorage.setItem('momentDate', moment().toString());
     this.router.navigate(['display']);
   }
 
